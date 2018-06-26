@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="74a11fcf-bd81-4960-888c-38330d2314ab" name="Default" comment="" />
+    <list default="true" id="74a11fcf-bd81-4960-888c-38330d2314ab" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientNet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientNet.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
@@ -32,9 +34,10 @@
       <file leaf-file-name="V2XClientNet.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientNet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-398">
-              <caret line="30" column="45" lean-forward="true" selection-start-line="30" selection-start-column="45" selection-end-line="30" selection-end-column="45" />
+            <state relative-caret-position="193">
+              <caret line="76" column="6" selection-start-line="76" selection-start-column="6" selection-end-line="76" selection-end-column="6" />
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="e#4471#4472#0" expanded="true" />
                 <element signature="e#4495#4496#0" expanded="true" />
               </folding>
@@ -123,6 +126,9 @@
     <dirStrings>
       <dir>$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo</dir>
     </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
     <option name="projectSyncType">
@@ -221,6 +227,7 @@
     <option name="width" value="1438" />
     <option name="height" value="781" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -459,7 +466,7 @@
       <workItem from="1529473473791" duration="25317000" />
       <workItem from="1529562044050" duration="219000" />
       <workItem from="1529563716456" duration="46162000" />
-      <workItem from="1529976179926" duration="11923000" />
+      <workItem from="1529976179926" duration="12040000" />
     </task>
     <servers />
   </component>
@@ -496,7 +503,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="147589000" />
+    <option name="totallyTimeSpent" value="147706000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -520,7 +527,7 @@
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50293255" side_tool="true" weight="0.31432748" />
       <window_info anchor="right" id="Maven Projects" order="4" weight="0.32991204" />
       <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Run" order="3" weight="0.32944608" />
       <window_info anchor="bottom" id="Spring" order="10" weight="0.32894737" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32894737" />
@@ -561,19 +568,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientNet.java</url>
-          <line>113</line>
+          <line>114</line>
           <properties />
           <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientNet.java</url>
-          <line>79</line>
+          <line>80</line>
           <properties />
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientNet.java</url>
-          <line>80</line>
+          <line>81</line>
           <properties />
           <option name="timeStamp" value="76" />
         </line-breakpoint>
@@ -978,9 +985,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientNet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-398">
-          <caret line="30" column="45" lean-forward="true" selection-start-line="30" selection-start-column="45" selection-end-line="30" selection-end-column="45" />
+        <state relative-caret-position="193">
+          <caret line="76" column="6" selection-start-line="76" selection-start-column="6" selection-end-line="76" selection-end-column="6" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="e#4471#4472#0" expanded="true" />
             <element signature="e#4495#4496#0" expanded="true" />
           </folding>

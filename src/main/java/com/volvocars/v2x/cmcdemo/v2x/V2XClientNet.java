@@ -74,6 +74,7 @@ public class V2XClientNet implements ApplicationListener<UDPClientRawMsgEvent>{
 
     private InetSocketAddress host;
 
+    //
     public V2XClientNet(String host,int port) {
         InetSocketAddress address = new InetSocketAddress(host,port);
         this.host = address;
