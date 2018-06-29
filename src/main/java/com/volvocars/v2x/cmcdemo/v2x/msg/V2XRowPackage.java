@@ -16,27 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.volvocars.v2x.cmcdemo.car.vo;
+package com.volvocars.v2x.cmcdemo.v2x.msg;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class BSMWheelBrakes {
-    @JsonProperty(value = "unusedBits")
-    public int getUnusedBits() {
-        return unusedBits;
+public class V2XRowPackage {
+    public String getRawString() {
+        return rawString;
     }
 
-    private int unusedBits=3;
+    private String rawString;
 
-    @JsonProperty(value = "bytes")
-    public int[] getBytes() {
-        return bytes;
-    }
-
-    private int[] bytes={64};
-
-    public BSMWheelBrakes(int unusedBits, int[] bytes) {
-        this.unusedBits = unusedBits;
-        this.bytes = bytes;
+    public V2XRowPackage(String resultString) {
+        this.rawString = resultString;
     }
 }

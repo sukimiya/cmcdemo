@@ -23,10 +23,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.volvocars.v2x.cmcdemo.car.vo.BSMFrame;
 import com.volvocars.v2x.cmcdemo.repo.CarAuthRepository;
 import com.volvocars.v2x.cmcdemo.v2x.V2XClientUtils;
+import io.e2x.logger.Logger;
 import io.e2x.utils.JsonUtils;
 import reactor.core.publisher.Mono;
 
 public class CarBSMUploadEvent {
+    Logger logger = new Logger(this);
     public BSMFrame bsmFrame;
     public CarAuthorizationVO authorizationVO;
 
@@ -59,6 +61,7 @@ public class CarBSMUploadEvent {
         ObjectMapper mapper = new ObjectMapper();
         try {
             String json = JsonUtils.object2Json(bsmUploadEventPackage);
+            logger.info("CarBSMUploadEvent.serialize:\n"+json);
             outputstream = V2XClientUtils.encrypt(json,this.key);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

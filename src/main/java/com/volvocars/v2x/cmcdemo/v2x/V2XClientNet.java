@@ -21,24 +21,35 @@ package com.volvocars.v2x.cmcdemo.v2x;
 import com.fendo.MD5.AESUtils;
 import com.volvocars.v2x.cmcdemo.car.vo.BSMFrame;
 import com.volvocars.v2x.cmcdemo.events.UDPClientRawMsgEvent;
+import com.volvocars.v2x.cmcdemo.v2x.client.V2XClientHandler;
 import com.volvocars.v2x.cmcdemo.v2x.vo.CarBSMUploadEvent;
 import com.volvocars.v2x.service.common.util.MD5Utils;
 import io.e2x.logger.Logger;
+import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.ChannelGroupFuture;
 import io.netty.channel.group.ChannelMatcher;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.oio.OioEventLoopGroup;
+import io.netty.channel.socket.DatagramChannel;
+import io.netty.channel.socket.DatagramPacket;
+import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.concurrent.EventExecutor;
 import io.netty.util.concurrent.ImmediateEventExecutor;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationListener;
 import reactor.core.publisher.Mono;
 import reactor.ipc.netty.NettyContext;
@@ -55,90 +66,59 @@ import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class V2XClientNet implements ApplicationListener<UDPClientRawMsgEvent>{
+public class V2XClientNet{
 
-    private Mono<? extends NettyContext> clientContext;
-    private UdpOutbound clientOut;
-    private UdpInbound clientIn;
-    private BSMSentSubscriber sentSubscriber = new BSMSentSubscriber();
-    private UdpClient udpClient;
-    private OioEventLoopGroup channels = new OioEventLoopGroup();
-    @Autowired
     public V2XClientServer v2XClientServer;
 
-    @Autowired
-    private ApplicationContext publisher;
-
-    private TcpClient bsmServer;
     private static final Charset ASCII = Charset.forName("utf-8");
 
     private InetSocketAddress host;
 
+    private Channel channel;
+
     //
-    public V2XClientNet(String host,int port) {
+    public V2XClientNet(String host, int port, V2XClientServer v2XClientServer) {
         InetSocketAddress address = new InetSocketAddress(host,port);
         this.host = address;
-        clientContext = UdpClient.create(builder ->
-            builder.port(this.host.getPort()).host(this.host.getHostString())
-                    .channelGroup(new DefaultChannelGroup(ImmediateEventExecutor.INSTANCE))
-                    .build()
-        ).newHandler(this::inOutBoundHandler);
-        clientContext.subscribe();
-        //udpconnection.inbound().receive();
-
-//        UdpServer.create().host("localhost").port(28120).bind().block().inbound()
-//        .receive().asByteArray().subscribe(bytes -> {
-//            try {
-//                String decoders = AESUtils.aesDecryptByBytes(bytes,v2XClientServer.getV2XAuth().key);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        });
+        this.v2XClientServer = v2XClientServer;
+        startInit();
     }
-    private Mono<Void> inOutBoundHandler(UdpInbound udpInbound, UdpOutbound udpOutbound){
-        clientOut = udpOutbound;
-        clientIn = udpInbound;
-        clientOut.options(NettyPipeline.SendOptions::flushOnEach);
-        return Mono.empty();
+    private V2XClientChannelInitializer channelInitializer;
+    public void startInit(){
+        channelInitializer = new V2XClientChannelInitializer(v2XClientServer);
+        EventLoopGroup group = new NioEventLoopGroup();
+        Bootstrap bootstrap = new Bootstrap();
+        bootstrap.group(group)
+                .channel(NioDatagramChannel.class)
+                .remoteAddress(host)
+                .handler(channelInitializer);
+        try {
+            channel = bootstrap.bind(0).sync().channel();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
-    private UdpOutbound send(byte[] bytes,UdpInbound udpInbound, UdpOutbound udpOutbound){
-        clientOut = udpOutbound;
-        clientIn = udpInbound;
-        clientOut.join(host.getAddress());
-        return (UdpOutbound) clientOut.sendByteArray(Mono.just(bytes));
-    }
-
-    public void send(BSMFrame frame) throws InterruptedException {
+    public void send(BSMFrame frame){
         CarBSMUploadEvent carBSMUploadEvent = new CarBSMUploadEvent(frame,v2XClientServer.getV2XAuth().key);
         carBSMUploadEvent.serialize();
         Logger logger = new Logger(this);
-        clientOut.sendByteArray(Mono.just(carBSMUploadEvent.getOutputstream())).subscribe(sentSubscriber);
+        send(carBSMUploadEvent.getOutputstream());
     }
-
-    @Override
-    public void onApplicationEvent(UDPClientRawMsgEvent udpClientRawMsgEvent) {
-
+    public void send(byte[] bytes){
+        channel.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(bytes), host));
     }
 }
-class BSMSentSubscriber implements Subscriber<Void>{
-    Logger logger = new Logger(this);
-    @Override
-    public void onSubscribe(Subscription subscription) {
 
+class V2XClientChannelInitializer extends ChannelInitializer<NioDatagramChannel>{
+
+    private V2XClientServer server;
+    public V2XClientChannelInitializer(V2XClientServer v2XClientServer) {
+        server = v2XClientServer;
     }
 
     @Override
-    public void onNext(Void aVoid) {
-
-    }
-
-    @Override
-    public void onError(Throwable throwable) {
-
-    }
-
-    @Override
-    public void onComplete() {
-        logger.debug("BSM Sent Complete["+System.currentTimeMillis()+"]");
+    protected void initChannel(NioDatagramChannel channel) throws Exception {
+        channel.pipeline().addLast(new V2XClientHandler(server));
+        channel.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
     }
 }

@@ -20,12 +20,12 @@ package com.volvocars.v2x.cmcdemo.car.vo;
 
 public class BSMVehicleSize {
     public int width;
-    public int vehicleLength;
-    public int vehicleHeight;
+    public int length;
+    public int height;
 
     public BSMVehicleSize(int width, int vehicleLength, int vehicleHeight) {
         this.width = width;
-        this.vehicleLength = vehicleLength;
-        this.vehicleHeight = vehicleHeight;
+        this.length = vehicleLength;
+        this.height = vehicleHeight;
     }
 }

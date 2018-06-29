@@ -24,6 +24,7 @@ import com.volvocars.v2x.cmcdemo.v2x.vo.CarAuthorizationVO;
 import com.volvocars.v2x.service.common.util.MD5Utils;
 import org.springframework.util.DigestUtils;
 
+import javax.crypto.Cipher;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;

@@ -14,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -26,6 +27,9 @@ import java.util.stream.Stream;
 
 @SpringBootApplication
 public class CmcdemoApplication {
+
+
+
 
     private Logger logger = new Logger(this);
 
@@ -46,23 +50,7 @@ public class CmcdemoApplication {
         V2XClientServer v2XClientServer = getV2XClientServer(carAuthRepository,carsRepository);
         v2XClientServer.setClient(getWebClient());
         Mono<AuthResp> authRespMono = null;
-        try {
-            v2XClientServer.loginCarById("0065766033703042","D8-C7-71-4B-7A-4C")
-                    .flatMap(authResp -> {
-                        logger.info("reviced Object :",authResp);
-                        CarAuthorizationVO auth = null;
-                        try {
-                            auth = V2XClientUtils.fromAuthResult(authResp,"0065766033703042");
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        V2XAuthorizationSuccessEvent event = new V2XAuthorizationSuccessEvent(this,auth);
-                        v2XClientServer.onApplicationEvent(event);
-                        return Mono.just(authResp);
-                    }).subscribe();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        v2XClientServer.loginCar("0065766033703042","D8-C7-71-4B-7A-4C");
         return args-> Stream.of("Finished Start Auth");
 
     }
@@ -74,9 +62,11 @@ public class CmcdemoApplication {
     private V2XClientNet v2XClientNet;
     @Bean
     public V2XClientNet getV2XClientNet(){
-        if(v2XClientNet==null)v2XClientNet = new V2XClientNet("192.168.1.6",28120);
+        if(v2XClientNet==null)v2XClientNet = new V2XClientNet("112.25.66.161",28120,v2XClientServer);
         return v2XClientNet;
     }
+    @Autowired
+    public ApplicationEventPublisher applicationEventPublisher;
 	public static void main(String[] args) {
 
         SpringApplication.run(CmcdemoApplication.class, args);

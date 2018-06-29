@@ -20,8 +20,9 @@ package com.volvocars.v2x.cmcdemo.repo;
 
 import com.volvocars.v2x.cmcdemo.car.vo.CarVO;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface CarsRepository extends ReactiveMongoRepository<CarVO,String> {
-    Mono<CarVO> findAllByAin(String ain);
+    Flux<CarVO> findAllByAin(String ain);
 }

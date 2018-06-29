@@ -36,6 +36,7 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.e2x.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationListener;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -56,7 +57,7 @@ public class V2XClientServer implements ApplicationListener<V2XAuthorizationSucc
     public CarsRepository carsRepository;
 
     @Autowired
-    private ApplicationContext publisher;
+    public ApplicationEventPublisher publisher;
 
     @Autowired
     private V2XClientNet netClient;
@@ -71,28 +72,43 @@ public class V2XClientServer implements ApplicationListener<V2XAuthorizationSucc
     }
     public Mono<AuthResp> loginCarById(String id, String localmac) throws InterruptedException {
         Thread.sleep(1000);
-        checkByCarId(id,localmac);
-        AuthReq authReq = new AuthReq(id,localmac,0);
-        logger.debug(authReq.toString());
-        return client.post().uri("/v2x-auth/v1/auth")
+        return checkByCarId(id,localmac).flatMap(carVO -> {
+            return Mono.just(new AuthReq(carVO.getAin(),carVO.getEth0_mac(),0));
+        }).flatMap(authReq -> client.post().uri("/v2x-auth/v1/auth")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .body(Mono.just(authReq),AuthReq.class)
                 .retrieve()
-                .bodyToMono(AuthResp.class);
+                .bodyToMono(AuthResp.class)
+        );
     }
     public void loginCar(String id,String mac){
-        AuthResp resp=null;
         try {
-            resp = loginCarById(id,mac).block();
-            V2XAuthorizationSuccessEvent event = new V2XAuthorizationSuccessEvent(this,expressResp2Auth(resp,id));
-            this.onApplicationEvent(event);
-            publisher.publishEvent(event);
+            loginCarById(id,mac).flatMap(resp1 -> {
+                return this.onAuthResult(resp1 ,id);
+            }).subscribe(carAuthorizationVO -> {
+                V2XAuthorizationSuccessEvent event = new V2XAuthorizationSuccessEvent(this,carAuthorizationVO);
+                publisher.publishEvent(event);
+            });
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (ParseException pe) {
-            pe.printStackTrace();
         }
     }
+    public Mono<CarVO> getFirstCar(){
+        return carsRepository.findAll()
+                .collectList().flatMap(carVOS -> Mono.just(carVOS.get(0)));
+    }
+
+    private Mono<CarAuthorizationVO> onAuthResult(AuthResp resp,String id) {
+        logger.info("reviced Object :",resp);
+        CarAuthorizationVO auth = null;
+        try {
+            auth = expressResp2Auth(resp,id);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return Mono.just(auth);
+    }
+
     private CarAuthorizationVO expressResp2Auth(AuthResp resp,String id) throws ParseException {
         CarAuthorizationVO auth = V2XClientUtils.fromAuthResult(resp,id);
         return auth;
@@ -111,10 +127,14 @@ public class V2XClientServer implements ApplicationListener<V2XAuthorizationSucc
     public void onBSMSent(Object o){
         logger.info("V2XService onBSMSent");
     }
-    public void checkByCarId(String id, String localmac){
+    public Mono<CarVO> checkByCarId(String id, String localmac){
 
-        carsRepository.findAllByAin(id).flatMap(car->{return Mono.just(car);}).thenEmpty((res) ->{
-            carsRepository.save(new CarVO(id,localmac,new CarStatusVO()));});
+        return carsRepository.findAllByAin(id)
+                .collectList().flatMap(carVOS -> {
+                    if (carVOS!=null&&!carVOS.isEmpty())
+                        return Mono.just(carVOS.get(0));
+                    return carsRepository.save(new CarVO(id,localmac,new CarStatusVO()));
+                });
 
     }
 
@@ -132,14 +152,10 @@ public class V2XClientServer implements ApplicationListener<V2XAuthorizationSucc
         Objects.requireNonNull(netClient,"V2XClientNet Null");
         tmpV2XAuth = v2XAuthorizationSuccessEvent.auth;
         //
-        Flux.interval(Duration.ofSeconds(5))
+        Flux.interval(Duration.ofMillis(100))
                 .map(this::nextBSMFrame)
                 .subscribe(bsmFrame -> {
-                    try {
-                        netClient.send(bsmFrame);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    netClient.send(bsmFrame);
                     //logger.info(bsmFrame.toString());
                 });
 

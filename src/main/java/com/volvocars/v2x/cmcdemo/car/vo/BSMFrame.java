@@ -36,8 +36,9 @@ public class BSMFrame {
         initDatas();
     }
     private void initDatas(){
-        this.plateNo = new byte[]{49, 50, 51, 52};
-        this.secMark = (int)System.currentTimeMillis();
+        this.plateNo = new int[]{49, 50, 51, 52};
+        this.secMark = (short) System.currentTimeMillis();
+        if(this.secMark<0)this.secMark += 32768;
         accuracy = new BSMVector("a20m","elev_000_01");
         transmission = "neutral";
         speed = 80;
@@ -45,11 +46,13 @@ public class BSMFrame {
         angle = 121;
         motionCfd = new BSMMotionCfd("prec0_01ms","prec01deg","prec0_02deg");
         accelSet = new BSMAccelSet(1202,315,120,343);
-        brakes = new BSMBrakes("on","engaged",new BSMWheelBrakes(3,new byte[]{64}));
+        int[] brekeBytes =new int[1];
+        brekeBytes[0]= 64;
+        brakes = new BSMBrakes("on","engaged",new BSMWheelBrakes(3,brekeBytes));
         size = new BSMVehicleSize(3,6,2);
         vehicleClass = new BSMVehicleClass(123);
     }
-    public BSMFrame(int msgCnt, int[] id, byte[] plateNo, int secMark, LocationWGS84 pos, BSMVector accuracy, String transmission, int speed, int heading, int angle, BSMMotionCfd motionCfd, BSMAccelSet accelSet, BSMBrakes brakes, BSMVehicleSize size, BSMVehicleClass vehicleClass, int[] token) {
+    public BSMFrame(int msgCnt, int[] id, int[] plateNo, int secMark, LocationWGS84 pos, BSMVector accuracy, String transmission, int speed, int heading, int angle, BSMMotionCfd motionCfd, BSMAccelSet accelSet, BSMBrakes brakes, BSMVehicleSize size, BSMVehicleClass vehicleClass, int[] token) {
         this.msgCnt = msgCnt;
         this.id = id;
         this.plateNo = plateNo;
@@ -68,7 +71,7 @@ public class BSMFrame {
         this.token = token;
     }
 
-    @JsonProperty("msgCnt")
+    @JsonProperty(value = "msgCnt",index = 0)
     public int getMsgCnt() {
         return msgCnt;
     }
@@ -80,7 +83,7 @@ public class BSMFrame {
     public void setMsgCnt(int msgCnt) {
         this.msgCnt = msgCnt;
     }
-    @JsonProperty("id")
+    @JsonProperty(value = "id",index = 1)
     public int[] getId() {
         return id;
     }
@@ -88,15 +91,15 @@ public class BSMFrame {
     public void setId(int[] id) {
         this.id = id;
     }
-    @JsonProperty("plateNo")
-    public byte[] getPlateNo() {
+    @JsonProperty(value = "plateNo",index = 2)
+    public int[] getPlateNo() {
         return plateNo;
     }
 
-    public void setPlateNo(byte[] plateNo) {
+    public void setPlateNo(int[] plateNo) {
         this.plateNo = plateNo;
     }
-    @JsonProperty("secMark")
+    @JsonProperty(value = "secMark",index = 3)
     public int getSecMark() {
         return secMark;
     }
@@ -105,7 +108,7 @@ public class BSMFrame {
         this.secMark = secMark;
     }
     @JsonView(LocationWGS84.class)
-    @JsonProperty("pos")
+    @JsonProperty(value = "pos",index = 4)
     public LocationWGS84 getPos() {
         return pos;
     }
@@ -114,7 +117,7 @@ public class BSMFrame {
         this.pos = pos;
     }
     @JsonView(BSMVector.class)
-    @JsonProperty("accuracy")
+    @JsonProperty(value = "accuracy",index = 5)
     public BSMVector getAccuracy() {
         return accuracy;
     }
@@ -122,7 +125,7 @@ public class BSMFrame {
     public void setAccuracy(BSMVector accuracy) {
         this.accuracy = accuracy;
     }
-    @JsonProperty("transmission")
+    @JsonProperty(value = "transmission",index = 6)
     public String getTransmission() {
         return transmission;
     }
@@ -130,7 +133,7 @@ public class BSMFrame {
     public void setTransmission(String transmission) {
         this.transmission = transmission;
     }
-    @JsonProperty("speed")
+    @JsonProperty(value = "speed",index = 7)
     public int getSpeed() {
         return speed;
     }
@@ -138,7 +141,7 @@ public class BSMFrame {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
-    @JsonProperty("heading")
+    @JsonProperty(value = "heading",index = 8)
     public int getHeading() {
         return heading;
     }
@@ -146,7 +149,7 @@ public class BSMFrame {
     public void setHeading(int heading) {
         this.heading = heading;
     }
-    @JsonProperty("angle")
+    @JsonProperty(value = "angle",index = 9)
     public int getAngle() {
         return angle;
     }
@@ -155,7 +158,7 @@ public class BSMFrame {
         this.angle = angle;
     }
     @JsonView(BSMMotionCfd.class)
-    @JsonProperty("motionCfd")
+    @JsonProperty(value = "motionCfd",index = 10)
     public BSMMotionCfd getMotionCfd() {
         return motionCfd;
     }
@@ -164,7 +167,7 @@ public class BSMFrame {
         this.motionCfd = motionCfd;
     }
     @JsonView(BSMAccelSet.class)
-    @JsonProperty("accelSet")
+    @JsonProperty(value = "accelSet",index = 11)
     public BSMAccelSet getAccelSet() {
         return accelSet;
     }
@@ -173,7 +176,7 @@ public class BSMFrame {
         this.accelSet = accelSet;
     }
     @JsonView(BSMBrakes.class)
-    @JsonProperty("brakes")
+    @JsonProperty(value = "brakes",index = 12)
     public BSMBrakes getBrakes() {
         return brakes;
     }
@@ -182,7 +185,7 @@ public class BSMFrame {
         this.brakes = brakes;
     }
     @JsonView(BSMVehicleSize.class)
-    @JsonProperty("size")
+    @JsonProperty(value = "size",index = 13)
     public BSMVehicleSize getSize() {
         return size;
     }
@@ -191,7 +194,7 @@ public class BSMFrame {
         this.size = size;
     }
     @JsonView(BSMVehicleClass.class)
-    @JsonProperty("vehicleClass")
+    @JsonProperty(value = "vehicleClass",index = 14)
     public BSMVehicleClass getVehicleClass() {
         return vehicleClass;
     }
@@ -199,7 +202,7 @@ public class BSMFrame {
     public void setVehicleClass(BSMVehicleClass vehicleClass) {
         this.vehicleClass = vehicleClass;
     }
-    @JsonProperty("token")
+    @JsonProperty(value = "token",index = 15)
     public int[] getToken() {
         return token;
     }
@@ -211,15 +214,17 @@ public class BSMFrame {
     private static int msgCnt;
     private int[] id;
 
+    @JsonProperty(required = false,access = JsonProperty.Access.WRITE_ONLY)
     public String getRawid() {
         return rawid;
     }
+    @JsonProperty(required = false,access = JsonProperty.Access.WRITE_ONLY)
     public String getRawtoken() {
         return rawtoken;
     }
 
     private String rawid;
-    private byte[] plateNo;
+    private int[] plateNo;
     private int secMark;
     private LocationWGS84 pos;
     private BSMVector accuracy;

@@ -20,6 +20,7 @@ package com.fendo.MD5;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -46,8 +47,68 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class AESUtils {
 
+    enum RandomBit{
+        B128(128),
+        B256(256)
+        ;
 
-    private static final String encodeRules = "fendo";
+        private int bit = 128;
+        public int getBit(){return bit;}
+        RandomBit(int bit) {
+            this.bit = bit;
+        }
+    }
+    enum KeyAlgorithm{
+        AES("AES"),	//Key generator for use with the AES algorithm.
+        ARCFOUR("ARCFOUR")	,//Key generator for use with the ARCFOUR (RC4) algorithm.
+        Blowfish("Blowfish")	,//Key generator for use with the Blowfish algorithm.
+        DES("Blowfish")	,//Key generator for use with the DES algorithm.
+        DESede("Blowfish")	,//Key generator for use with the DESede (triple-DES) algorithm.
+        HmacMD5("Blowfish")	,//Key generator for use with the HmacMD5 algorithm.
+        HmacSHA1("HmacSHA1") ,//HmacSHA256 HmacSHA384 HmacSHA512	Keys generator for use with the various flavors of the HmacSHA algorithms.
+        RC2("HmacSHA1")	//Key generator for use with the RC2 algorithm.
+        ;
+
+        public String getAlgorithm() {
+            return algorithm;
+        }
+
+        private String algorithm;
+
+        KeyAlgorithm(String algorithm) {
+            this.algorithm = algorithm;
+        }
+    }
+
+    enum Algorithm{
+        AES("AES"),
+        DES("DES"),
+        AES_CBC_P("AES/CBC/PKCS5Padding"),
+        AES_ECB_NP("AES/ECB/NoPadding"),
+        AES_ECB_P("AES/ECB/PKCS5Padding"),
+        DES_CBC_NP("DES/CBC/NoPadding"),
+        DES_CBC_P("DES/CBC/PKCS5Padding"),
+        DES_ECB_NP("DES/ECB/NoPadding"),
+        DES_ECB_P("DES/ECB/PKCS5Padding"),
+        DESEDE_CBC_NP("DESede/CBC/NoPadding"),
+        DESEDE_CBC_P("DESede/CBC/PKCS5Padding"),
+        DESEDE_ECB_NP("DESede/ECB/NoPadding"),
+        DESEDE_ECB_P("DESede/ECB/PKCS5Padding"),
+        RSA_ECB_P("RSA/ECB/PKCS1Padding"),
+        RSA_ECB_OAEP1_MGF1PADDING("RSA/ECB/OAEPWithSHA-1AndMGF1Padding"),
+        RSA_ECB_OAEP256_MGF1PADDING("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+
+
+        private String algorithm;
+        public String getAlgorithm(){return algorithm;}
+        private Algorithm(String ag){
+            algorithm = ag;
+        }
+    }
+
+    private static final String charset = "utf-8";
+
+    private static final String encodeRules = "volvo cars";
 
     /**
      * 加密
@@ -58,27 +119,28 @@ public class AESUtils {
      * 5.内容加密
      * 6.返回字符串
      */
+    public static Algorithm algorithm = Algorithm.AES_ECB_P;
     public static String AESEncode(String content) {
         try {
             //1.构造密钥生成器，指定为AES算法,不区分大小写
-            KeyGenerator keygen = KeyGenerator.getInstance("AES");
+            KeyGenerator keygen = KeyGenerator.getInstance(KeyAlgorithm.AES.getAlgorithm());
             //2.根据ecnodeRules规则初始化密钥生成器
             //生成一个128位的随机源,根据传入的字节数组
             SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
             random.setSeed(encodeRules.getBytes());
-            keygen.init(128, random);
+            keygen.init(RandomBit.B128.getBit(), random);
             //3.产生原始对称密钥
             SecretKey original_key = keygen.generateKey();
             //4.获得原始对称密钥的字节数组
             byte[] raw = original_key.getEncoded();
             //5.根据字节数组生成AES密钥
-            SecretKey key = new SecretKeySpec(raw, "AES");
+            SecretKey key = new SecretKeySpec(raw, algorithm.getAlgorithm());
             //6.根据指定算法AES自成密码器
-            Cipher cipher = Cipher.getInstance("AES");
+            Cipher cipher = Cipher.getInstance(algorithm.getAlgorithm());
             //7.初始化密码器，第一个参数为加密(Encrypt_mode)或者解密解密(Decrypt_mode)操作，第二个参数为使用的KEY
             cipher.init(Cipher.ENCRYPT_MODE, key);
             //8.获取加密内容的字节数组(这里要设置为utf-8)不然内容中如果有中文和英文混合中文就会解密为乱码
-            byte[] byte_encode = content.getBytes("utf-8");
+            byte[] byte_encode = content.getBytes(charset);
             //9.根据密码器的初始化方式--加密：将数据加密
             byte[] byte_AES = cipher.doFinal(byte_encode);
             //10.将加密后的数据转换为字符串
@@ -115,13 +177,13 @@ public class AESUtils {
      * @throws Exception
      */
     public static byte[] aesEncryptToBytes(String content, String encryptKey) throws Exception {
-        KeyGenerator kgen = KeyGenerator.getInstance("AES");
-        kgen.init(128, new SecureRandom(encryptKey.getBytes()));
+        KeyGenerator kgen = KeyGenerator.getInstance(KeyAlgorithm.AES.getAlgorithm());
+        kgen.init(RandomBit.B128.getBit(), new SecureRandom(encryptKey.getBytes()));
 
-        Cipher cipher = Cipher.getInstance("AES");
+        Cipher cipher = Cipher.getInstance(algorithm.getAlgorithm());
         cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(kgen.generateKey().getEncoded(), "AES"));
 
-        return cipher.doFinal(content.getBytes("utf-8"));
+        return cipher.doFinal(content.getBytes(charset));
     }
 
     /**
@@ -134,20 +196,20 @@ public class AESUtils {
     public static String AESDecode(String content) {
         try {
             //1.构造密钥生成器，指定为AES算法,不区分大小写
-            KeyGenerator keygen = KeyGenerator.getInstance("AES");
+            KeyGenerator keygen = KeyGenerator.getInstance(KeyAlgorithm.AES.getAlgorithm());
             //2.根据ecnodeRules规则初始化密钥生成器
             //生成一个128位的随机源,根据传入的字节数组
             SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
             random.setSeed(encodeRules.getBytes());
-            keygen.init(128, random);
+            keygen.init(RandomBit.B128.getBit(), random);
             //3.产生原始对称密钥
             SecretKey original_key = keygen.generateKey();
             //4.获得原始对称密钥的字节数组
             byte[] raw = original_key.getEncoded();
             //5.根据字节数组生成AES密钥
-            SecretKey key = new SecretKeySpec(raw, "AES");
+            SecretKey key = new SecretKeySpec(raw, algorithm.getAlgorithm());
             //6.根据指定算法AES自成密码器
-            Cipher cipher = Cipher.getInstance("AES");
+            Cipher cipher = Cipher.getInstance(algorithm.getAlgorithm());
             //7.初始化密码器，第一个参数为加密(Encrypt_mode)或者解密(Decrypt_mode)操作，第二个参数为使用的KEY
             cipher.init(Cipher.DECRYPT_MODE, key);
             //8.将加密并编码后的内容解码成字节数组
@@ -156,7 +218,7 @@ public class AESUtils {
              * 解密
              */
             byte[] byte_decode = cipher.doFinal(byte_content);
-            String AES_decode = new String(byte_decode, "utf-8");
+            String AES_decode = new String(byte_decode, charset);
             return AES_decode;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -184,10 +246,10 @@ public class AESUtils {
      * @throws Exception
      */
     public static String aesDecryptByBytes(byte[] encryptBytes, String decryptKey) throws Exception {
-        KeyGenerator kgen = KeyGenerator.getInstance("AES");
-        kgen.init(128, new SecureRandom(decryptKey.getBytes()));
+        KeyGenerator kgen = KeyGenerator.getInstance(KeyAlgorithm.AES.getAlgorithm());
+        kgen.init(RandomBit.B128.getBit(), new SecureRandom(decryptKey.getBytes()));
 
-        Cipher cipher = Cipher.getInstance("AES");
+        Cipher cipher = Cipher.getInstance(algorithm.getAlgorithm());
         cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(kgen.generateKey().getEncoded(), "AES"));
         byte[] decryptBytes = cipher.doFinal(encryptBytes);
 
@@ -233,19 +295,5 @@ public class AESUtils {
      */
     public static String aesEncrypt(String content, String encryptKey) throws Exception {
         return base64Encode(aesEncryptToBytes(content, encryptKey));
-    }
-
-    public static void main(String[] args) {
-        String[] keys = {
-                "", "root"
-        };
-        System.out.println("key | AESEncode | AESDecode");
-        for (String key : keys) {
-            System.out.print("key:"+key + " | ");
-            String encryptString = AESEncode(key);
-            System.out.print(encryptString + " | ");
-            String decryptString = AESDecode(encryptString);
-            System.out.println(decryptString);
-        }
     }
 }

@@ -18,6 +18,7 @@
 
 package com.volvocars.v2x.cmcdemo.car.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.volvocars.v2x.cmcdemo.car.CarLocationUtils;
 
 public class LocationWGS84 {
@@ -35,6 +36,7 @@ public class LocationWGS84 {
          setAs(CarLocationUtils.globalTowgs84(location));
     }
 
+    @JsonProperty(value = "long_")
     public long getLongitude() {
         return longitude;
     }
@@ -45,6 +47,7 @@ public class LocationWGS84 {
 
     private long longitude = 1203139968;
 
+    @JsonProperty(value = "lat")
     public long getLatitude() {
         return latitude;
     }
@@ -55,6 +58,7 @@ public class LocationWGS84 {
 
     private long latitude = 314806592;
 
+    @JsonProperty(value = "elevation")
     public long getElevation() {
         return elevation;
     }
