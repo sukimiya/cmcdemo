@@ -19,10 +19,12 @@
 package com.volvocars.v2x.cmcdemo.v2x;
 
 import com.fendo.MD5.AESUtils;
+import com.k99k.tools.enc.Aes;
 import com.volvocars.v2x.cmcdemo.car.vo.CarVO;
 import com.volvocars.v2x.cmcdemo.v2x.msg.AuthResp;
 import com.volvocars.v2x.cmcdemo.v2x.vo.CarAuthorizationVO;
 import com.volvocars.v2x.service.common.util.MD5Utils;
+import io.e2x.logger.Logger;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.DigestUtils;
 
@@ -87,22 +89,25 @@ public class V2XClientUtils {
     }
 
     public static CarAuthorizationVO fromAuthResult(AuthResp authResp,String id,String mac) throws Exception {
+        byte[] ivk = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         CarAuthorizationVO carAuthorizationVO;
         carAuthorizationVO = new CarAuthorizationVO(id,authResp.getToken(),
                 preseLongStringToDate(authResp.getTokenvalidtime()).getTime(),authResp.getKey());
-        String md5token = EncoderByMD516(id+mac+authResp.getTokenvalidtime());
+        String md5token = MD5Utils.md5_16(id+mac+authResp.getTokenvalidtime());
         byte[] base64token = Base64.getDecoder().decode(authResp.getToken());
         //carAuthorizationVO.accessToken = decode(base64token,md5token);
         String tokenStr = authResp.getToken();
         byte[] tokenbyte = tokenStr.getBytes();
-        carAuthorizationVO.accessToken = AESUtils.AESDecode(tokenStr,md5token);
-        String md5key = EncoderByMD516(id+mac+authResp.getKeyvalidtime());
+        carAuthorizationVO.accessToken = Aes.decText(authResp.getToken(),md5token.getBytes(),ivk);
+        String md5key = MD5Utils.md5_16(id+mac+authResp.getKeyvalidtime());
         byte[] base64key = Base64.getDecoder().decode(authResp.getKey());
         String keyStr = authResp.getKey();
         byte[] keyByte = keyStr.getBytes();
         //carAuthorizationVO.key = decode(base64key,md5key);
-        carAuthorizationVO.key = AESUtils.AESDecode(keyStr,md5key);
+        carAuthorizationVO.key = Aes.decText(authResp.getKey(),md5key.getBytes(),ivk);
         carAuthorizationVO.expired = fromV2XNetDateFormat(authResp.getTokenvalidtime()).getTime();
+        Logger logger = new Logger(V2XClientUtils.class);
+        logger.info("get from AuthResp:\n Token:"+carAuthorizationVO.accessToken+"\nkey:"+carAuthorizationVO.key);
         return carAuthorizationVO;
 
     }

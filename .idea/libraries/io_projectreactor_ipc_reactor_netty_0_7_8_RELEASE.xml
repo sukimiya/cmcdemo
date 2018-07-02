@@ -19,7 +19,20 @@
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/.ideaLibSources/reactor-netty-0.7.8.RELEASE-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/projectreactor/ipc/reactor-netty/0.7.8.RELEASE/reactor-netty-0.7.8.RELEASE-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-codec-http/4.1.25.Final/netty-codec-http-4.1.25.Final-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-codec/4.1.25.Final/netty-codec-4.1.25.Final-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-handler/4.1.25.Final/netty-handler-4.1.25.Final-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-buffer/4.1.25.Final/netty-buffer-4.1.25.Final-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport/4.1.25.Final/netty-transport-4.1.25.Final-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-resolver/4.1.25.Final/netty-resolver-4.1.25.Final-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-handler-proxy/4.1.25.Final/netty-handler-proxy-4.1.25.Final-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-codec-socks/4.1.25.Final/netty-codec-socks-4.1.25.Final-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport-native-epoll/4.1.25.Final/netty-transport-native-epoll-4.1.25.Final-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-common/4.1.25.Final/netty-common-4.1.25.Final-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport-native-unix-common/4.1.25.Final/netty-transport-native-unix-common-4.1.25.Final-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/projectreactor/reactor-core/3.1.8.RELEASE/reactor-core-3.1.8.RELEASE-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/reactivestreams/reactive-streams/1.0.2/reactive-streams-1.0.2-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

@@ -69,19 +69,8 @@
 		</dependency>
 		<dependency>
 			<groupId>io.netty</groupId>
-			<artifactId>netty-codec</artifactId>
-			<version>4.1.24.Final</version>
-		</dependency>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-bom</artifactId>
-            <version>4.1.25.Final</version>
-        </dependency>
-		<dependency>
-			<groupId>io.projectreactor.ipc</groupId>
-			<artifactId>reactor-netty</artifactId>
-			<version>0.7.8.RELEASE</version>
-			<type>pom</type>
+			<artifactId>netty-all</artifactId>
+			<version>4.1.25.Final</version>
 		</dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -96,7 +85,6 @@
         <dependency>
             <groupId>uk.gov.hmrc</groupId>
             <artifactId>logback-json-logger_2.11</artifactId>
-            <version>3.1.0</version>
         </dependency>
 		<dependency>
 			<groupId>org.openmuc</groupId>

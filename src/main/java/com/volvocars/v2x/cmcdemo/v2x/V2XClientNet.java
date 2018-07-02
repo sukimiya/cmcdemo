@@ -18,53 +18,23 @@
 
 package com.volvocars.v2x.cmcdemo.v2x;
 
-import com.fendo.MD5.AESUtils;
 import com.volvocars.v2x.cmcdemo.car.vo.BSMFrame;
-import com.volvocars.v2x.cmcdemo.events.UDPClientRawMsgEvent;
 import com.volvocars.v2x.cmcdemo.v2x.client.V2XClientHandler;
 import com.volvocars.v2x.cmcdemo.v2x.vo.CarBSMUploadEvent;
-import com.volvocars.v2x.service.common.util.MD5Utils;
 import io.e2x.logger.Logger;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
-import io.netty.channel.group.ChannelGroup;
-import io.netty.channel.group.ChannelGroupFuture;
-import io.netty.channel.group.ChannelMatcher;
-import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.oio.OioEventLoopGroup;
-import io.netty.channel.socket.DatagramChannel;
 import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.socket.nio.NioDatagramChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import io.netty.util.concurrent.EventExecutor;
-import io.netty.util.concurrent.ImmediateEventExecutor;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.ApplicationListener;
-import reactor.core.publisher.Mono;
-import reactor.ipc.netty.NettyContext;
-import reactor.ipc.netty.NettyPipeline;
-import reactor.ipc.netty.channel.ContextHandler;
-import reactor.ipc.netty.tcp.TcpClient;
-import reactor.ipc.netty.udp.UdpClient;
-import reactor.ipc.netty.udp.UdpInbound;
-import reactor.ipc.netty.udp.UdpOutbound;
 
 import java.net.InetSocketAddress;
-import java.nio.channels.NetworkChannel;
 import java.nio.charset.Charset;
-import java.util.Collection;
-import java.util.Iterator;
 
 public class V2XClientNet{
 
@@ -119,6 +89,6 @@ class V2XClientChannelInitializer extends ChannelInitializer<NioDatagramChannel>
     @Override
     protected void initChannel(NioDatagramChannel channel) throws Exception {
         channel.pipeline().addLast(new V2XClientHandler(server));
-        channel.pipeline().addLast(new LoggingHandler(LogLevel.INFO));
+        //channel.pipeline().addLast(new LoggingHandler(LogLevel.INFO));
     }
 }

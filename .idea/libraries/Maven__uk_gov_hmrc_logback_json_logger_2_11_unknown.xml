@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: uk.gov.hmrc:logback-json-logger_2.11:unknown">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/uk/gov/hmrc/logback-json-logger_2.11/unknown/logback-json-logger_2.11-unknown.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/uk/gov/hmrc/logback-json-logger_2.11/unknown/logback-json-logger_2.11-unknown-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/uk/gov/hmrc/logback-json-logger_2.11/unknown/logback-json-logger_2.11-unknown-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

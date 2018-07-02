@@ -20,12 +20,14 @@ package com.volvocars.v2x.cmcdemo.v2x.vo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.k99k.tools.enc.Aes;
 import com.volvocars.v2x.cmcdemo.car.vo.BSMASNVO;
 import com.volvocars.v2x.cmcdemo.car.vo.BSMFrame;
 import com.volvocars.v2x.cmcdemo.repo.CarAuthRepository;
 import com.volvocars.v2x.cmcdemo.v2x.V2XClientUtils;
 import io.e2x.logger.Logger;
 import io.e2x.utils.JsonUtils;
+import org.asnlab.asndt.runtime.conv.AsnConverter;
 import org.bouncycastle.asn1.BEROctetString;
 import org.bouncycastle.util.encoders.Hex;
 import reactor.core.publisher.Mono;
@@ -62,13 +64,15 @@ public class CarBSMUploadEvent {
     public Mono<CarBSMUploadEvent> serialize(){
         BSMUploadEventPackage bsmUploadEventPackage = new BSMUploadEventPackage(0,bsmFrame);
         ObjectMapper mapper = new ObjectMapper();
+        byte[] ivk = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         try {
             String json = JsonUtils.object2Json(bsmUploadEventPackage);
-            BSMASNVO bsmasnvo = new BSMASNVO(0,bsmFrame);
-            byte[] asn1 = bsmasnvo.toASN1Primitive().getEncoded();
-            BEROctetString keyasn = new BEROctetString(this.key.getBytes());
-            logger.info("CarBSMUploadEvent.serialize with key: "+keyasn.toString());
-            outputstream = V2XClientUtils.encrypt(asn1,keyasn.toString());
+//            BSMASNVO bsmasnvo = new BSMASNVO(0,bsmFrame);
+//            byte[] asn1 = bsmasnvo.toASN1Primitive().getEncoded();
+            logger.info("CarBSMUploadEvent.serialize with key: "+key);
+            AsnConverter asn1 =
+            outputstream = Aes.encBytes(asn1,key.getBytes(),ivk);
+            logger.info("out put steam:"+Hex.toHexString(outputstream).toUpperCase());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (Exception e) {
