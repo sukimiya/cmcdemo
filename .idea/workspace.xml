@@ -1,68 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="74a11fcf-bd81-4960-888c-38330d2314ab" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_bom_4_1_25_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_buffer_4_1_24_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_4_1_24_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_http2_4_1_25_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_http_4_1_25_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_socks_4_1_25_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_common_4_1_25_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_4_1_25_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_proxy_4_1_25_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_4_1_25_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_4_1_25_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_epoll_linux_x86_64_4_1_25_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_unix_common_4_1_25_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openmuc_jasn1_1_10_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__uk_gov_hmrc_logback_json_logger_2_11_3_1_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/libs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMASNVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMAccelSetASN.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMBrakesASN.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMFrameASN.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMMotionCfdASN.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMPosASN.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMVectorASN.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMVehicleClassASN.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMVehicleSizeASN.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMWheelBrakesASN.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_netty_reactor_netty_0_8_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_netty_reactor_netty_0_8_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_reactor_core_3_2_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_reactor_core_3_2_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_2_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_2_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_2_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_2_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_2_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_2_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_mongodb_reactive_2_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_mongodb_reactive_2_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_json_2_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_json_2_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_2_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_2_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_reactor_netty_2_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_reactor_netty_2_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_security_2_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_security_2_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_2_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_2_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_webflux_2_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_webflux_2_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_2_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_2_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_2_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_2_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_5_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_5_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_5_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_5_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_5_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_5_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_5_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_5_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_5_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_5_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jcl_5_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jcl_5_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_5_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_5_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_5_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_5_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_5_1_0_BUILD_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_5_1_0_BUILD_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmcdemo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/cmcdemo.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fendo/MD5/AESUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fendo/MD5/AESUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMWheelBrakes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/car/vo/BSMWheelBrakes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientNet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientNet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/msg/AuthResp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/msg/AuthResp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/vo/CarBSMUploadEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/vo/CarBSMUploadEvent.java" afterDir="false" />
-    </list>
+    <list default="true" id="74a11fcf-bd81-4960-888c-38330d2314ab" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
@@ -81,7 +20,7 @@
       <file leaf-file-name="V2XClientUtils.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
+            <state relative-caret-position="341">
               <caret line="97" selection-start-line="97" selection-end-line="97" />
             </state>
           </provider>
@@ -596,7 +535,7 @@
       <workItem from="1530149510849" duration="13293000" />
       <workItem from="1530234872285" duration="26234000" />
       <workItem from="1530434255373" duration="435000" />
-      <workItem from="1530434825593" duration="11861000" />
+      <workItem from="1530434825593" duration="12368000" />
     </task>
     <servers />
   </component>
@@ -633,7 +572,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="211731000" />
+    <option name="totallyTimeSpent" value="212238000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -649,7 +588,7 @@
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="7" weight="0.32894737" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.32894737" />
+      <window_info anchor="bottom" id="Messages" order="12" visible="true" weight="0.32894737" />
       <window_info anchor="right" id="Palette&#9;" order="9" />
       <window_info id="Image Layers" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
@@ -662,14 +601,14 @@
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32894737" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="3" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49148935" visible="true" weight="0.28008595" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49148935" visible="true" weight="0.28008595" />
       <window_info anchor="right" id="Bean Validation" order="7" weight="0.32991204" />
       <window_info anchor="right" id="Database" order="5" />
       <window_info id="Learn" order="5" weight="0.32991204" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="UI Designer" order="4" />
       <window_info anchor="right" id="Theme Preview" order="8" />
-      <window_info active="true" anchor="bottom" id="Debug" order="4" sideWeight="0.49641833" visible="true" weight="0.49853802" />
+      <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.49641833" weight="0.49853802" />
       <window_info id="Favorites" order="6" sideWeight="0.50851065" side_tool="true" weight="0.26099706" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -1125,7 +1064,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/volvocars/v2x/cmcdemo/v2x/V2XClientUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
+        <state relative-caret-position="341">
           <caret line="97" selection-start-line="97" selection-end-line="97" />
         </state>
       </provider>
