@@ -36,7 +36,7 @@ public class BSMFrame {
         initDatas();
     }
     private void initDatas(){
-        this.plateNo = new int[]{49, 50, 51, 52};
+        this.plateNo = new byte[]{49, 50, 51, 52};
         this.secMark = (short) System.currentTimeMillis();
         if(this.secMark<0)this.secMark += 32768;
         accuracy = new BSMVector("a20m","elev_000_01");
@@ -46,13 +46,13 @@ public class BSMFrame {
         angle = 121;
         motionCfd = new BSMMotionCfd("prec0_01ms","prec01deg","prec0_02deg");
         accelSet = new BSMAccelSet(1202,315,120,343);
-        int[] brekeBytes =new int[1];
+        byte[] brekeBytes =new byte[1];
         brekeBytes[0]= 64;
         brakes = new BSMBrakes("on","engaged",new BSMWheelBrakes(3,brekeBytes));
         size = new BSMVehicleSize(3,6,2);
         vehicleClass = new BSMVehicleClass(123);
     }
-    public BSMFrame(int msgCnt, int[] id, int[] plateNo, int secMark, LocationWGS84 pos, BSMVector accuracy, String transmission, int speed, int heading, int angle, BSMMotionCfd motionCfd, BSMAccelSet accelSet, BSMBrakes brakes, BSMVehicleSize size, BSMVehicleClass vehicleClass, int[] token) {
+    public BSMFrame(int msgCnt, byte[] id, byte[] plateNo, int secMark, LocationWGS84 pos, BSMVector accuracy, String transmission, int speed, int heading, int angle, BSMMotionCfd motionCfd, BSMAccelSet accelSet, BSMBrakes brakes, BSMVehicleSize size, BSMVehicleClass vehicleClass, byte[] token) {
         this.msgCnt = msgCnt;
         this.id = id;
         this.plateNo = plateNo;
@@ -84,19 +84,19 @@ public class BSMFrame {
         this.msgCnt = msgCnt;
     }
     @JsonProperty(value = "id",index = 1)
-    public int[] getId() {
+    public byte[] getId() {
         return id;
     }
 
-    public void setId(int[] id) {
+    public void setId(byte[] id) {
         this.id = id;
     }
     @JsonProperty(value = "plateNo",index = 2)
-    public int[] getPlateNo() {
+    public byte[] getPlateNo() {
         return plateNo;
     }
 
-    public void setPlateNo(int[] plateNo) {
+    public void setPlateNo(byte[] plateNo) {
         this.plateNo = plateNo;
     }
     @JsonProperty(value = "secMark",index = 3)
@@ -203,16 +203,16 @@ public class BSMFrame {
         this.vehicleClass = vehicleClass;
     }
     @JsonProperty(value = "token",index = 15)
-    public int[] getToken() {
+    public byte[] getToken() {
         return token;
     }
 
-    public void setToken(int[] token) {
+    public void setToken(byte[] token) {
         this.token = token;
     }
 
     private static int msgCnt;
-    private int[] id;
+    private byte[] id;
 
     @JsonProperty(required = false,access = JsonProperty.Access.WRITE_ONLY)
     public String getRawid() {
@@ -224,7 +224,7 @@ public class BSMFrame {
     }
 
     private String rawid;
-    private int[] plateNo;
+    private byte[] plateNo;
     private int secMark;
     private LocationWGS84 pos;
     private BSMVector accuracy;
@@ -237,18 +237,18 @@ public class BSMFrame {
     private BSMBrakes brakes;
     private BSMVehicleSize size;
     private BSMVehicleClass vehicleClass;
-    private int[] token;
+    private byte[] token;
     private String rawtoken;
 
-    private int[] tremByte(byte[] ori,int maxLengh){
-        int[] rs = new int[maxLengh];
+    private byte[] tremByte(byte[] ori,int maxLengh){
+        byte[] rs = new byte[maxLengh];
         int max = ori.length;
         int n = maxLengh-1;
         for(int i=max-maxLengh;i<max;i++){
             if(i<0){
                 rs[n] = 0;
             }else{
-                rs[n] = LangUtils.byteToInt(ori[i]);
+                rs[n] = ori[i];
             }
             n--;
 

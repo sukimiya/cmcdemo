@@ -84,7 +84,7 @@ public class V2XClientServer implements ApplicationListener<V2XAuthorizationSucc
     public void loginCar(String id,String mac){
         try {
             loginCarById(id,mac).flatMap(resp1 -> {
-                return this.onAuthResult(resp1 ,id);
+                return this.onAuthResult(resp1 ,id,mac);
             }).subscribe(carAuthorizationVO -> {
                 V2XAuthorizationSuccessEvent event = new V2XAuthorizationSuccessEvent(this,carAuthorizationVO);
                 publisher.publishEvent(event);
@@ -98,19 +98,21 @@ public class V2XClientServer implements ApplicationListener<V2XAuthorizationSucc
                 .collectList().flatMap(carVOS -> Mono.just(carVOS.get(0)));
     }
 
-    private Mono<CarAuthorizationVO> onAuthResult(AuthResp resp,String id) {
-        logger.info("reviced Object :",resp);
+    private Mono<CarAuthorizationVO> onAuthResult(AuthResp resp,String id,String mac) {
+        logger.info("reviced Object :"+resp.toString());
         CarAuthorizationVO auth = null;
         try {
-            auth = expressResp2Auth(resp,id);
+            auth = expressResp2Auth(resp,id,mac);
         } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return Mono.just(auth);
     }
 
-    private CarAuthorizationVO expressResp2Auth(AuthResp resp,String id) throws ParseException {
-        CarAuthorizationVO auth = V2XClientUtils.fromAuthResult(resp,id);
+    private CarAuthorizationVO expressResp2Auth(AuthResp resp,String id,String mac) throws Exception {
+        CarAuthorizationVO auth = V2XClientUtils.fromAuthResult(resp,id,mac);
         return auth;
     }
     public void uploadBSMPackage(BSMFrame bsmFrame) {

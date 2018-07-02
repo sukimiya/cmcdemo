@@ -119,6 +119,6 @@ class V2XClientChannelInitializer extends ChannelInitializer<NioDatagramChannel>
     @Override
     protected void initChannel(NioDatagramChannel channel) throws Exception {
         channel.pipeline().addLast(new V2XClientHandler(server));
-        channel.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
+        channel.pipeline().addLast(new LoggingHandler(LogLevel.INFO));
     }
 }

@@ -19,17 +19,21 @@
 package com.volvocars.v2x.cmcdemo.v2x;
 
 import com.fendo.MD5.AESUtils;
+import com.volvocars.v2x.cmcdemo.car.vo.CarVO;
 import com.volvocars.v2x.cmcdemo.v2x.msg.AuthResp;
 import com.volvocars.v2x.cmcdemo.v2x.vo.CarAuthorizationVO;
 import com.volvocars.v2x.service.common.util.MD5Utils;
+import org.springframework.util.Base64Utils;
 import org.springframework.util.DigestUtils;
 
 import javax.crypto.Cipher;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 
 public class V2XClientUtils {
@@ -50,15 +54,6 @@ public class V2XClientUtils {
         System.out.println("MD5Utils->Encoder: "+str);
         return MD5Utils.md5MySQL16(str).toUpperCase();
     }
-    public static CarAuthorizationVO fromAuthResult(AuthResp authResp,String id) throws ParseException {
-        CarAuthorizationVO carAuthorizationVO;
-                carAuthorizationVO = new CarAuthorizationVO(id,authResp.getToken(),
-                        preseLongStringToDate(authResp.getTokenvalidtime()).getTime(),authResp.getKey());
-        carAuthorizationVO.accessToken = authResp.getToken();
-        carAuthorizationVO.key = authResp.getKey();
-        carAuthorizationVO.expired = fromV2XNetDateFormat(authResp.getTokenvalidtime()).getTime();
-        return carAuthorizationVO;
-    }
     private static final SimpleDateFormat dataformat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
     public static Date fromV2XNetDateFormat(String dateStr) throws ParseException {
         return dataformat.parse(dateStr);
@@ -77,8 +72,8 @@ public class V2XClientUtils {
      *            加密需要的密码
      * @return 密文
      */
-    public static byte[] encrypt(String content, String password ,String...options) throws Exception {
-        return AESUtils.aesEncryptToBytes(content,password);
+    public static byte[] encrypt(byte[] content, String password ,String...options) throws Exception {
+        return AESUtils.aesEncrypt(content,password);
     }
     public static String decode(byte[] encryptContent, String password, String...options) throws Exception{
         return AESUtils.aesDecryptByBytes(encryptContent,password);
@@ -89,5 +84,26 @@ public class V2XClientUtils {
     }
     public static Date preseLongStringToDate(String s) throws ParseException {
         return v2xdataformat.parse(s);
+    }
+
+    public static CarAuthorizationVO fromAuthResult(AuthResp authResp,String id,String mac) throws Exception {
+        CarAuthorizationVO carAuthorizationVO;
+        carAuthorizationVO = new CarAuthorizationVO(id,authResp.getToken(),
+                preseLongStringToDate(authResp.getTokenvalidtime()).getTime(),authResp.getKey());
+        String md5token = EncoderByMD516(id+mac+authResp.getTokenvalidtime());
+        byte[] base64token = Base64.getDecoder().decode(authResp.getToken());
+        //carAuthorizationVO.accessToken = decode(base64token,md5token);
+        String tokenStr = authResp.getToken();
+        byte[] tokenbyte = tokenStr.getBytes();
+        carAuthorizationVO.accessToken = AESUtils.AESDecode(tokenStr,md5token);
+        String md5key = EncoderByMD516(id+mac+authResp.getKeyvalidtime());
+        byte[] base64key = Base64.getDecoder().decode(authResp.getKey());
+        String keyStr = authResp.getKey();
+        byte[] keyByte = keyStr.getBytes();
+        //carAuthorizationVO.key = decode(base64key,md5key);
+        carAuthorizationVO.key = AESUtils.AESDecode(keyStr,md5key);
+        carAuthorizationVO.expired = fromV2XNetDateFormat(authResp.getTokenvalidtime()).getTime();
+        return carAuthorizationVO;
+
     }
 }

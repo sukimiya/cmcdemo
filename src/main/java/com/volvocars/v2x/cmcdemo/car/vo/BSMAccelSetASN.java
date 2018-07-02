@@ -18,25 +18,29 @@
 
 package com.volvocars.v2x.cmcdemo.car.vo;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.bouncycastle.asn1.*;
 
-public class BSMWheelBrakes {
-    @JsonProperty(value = "unusedBits")
-    public int getUnusedBits() {
-        return unusedBits;
+public class BSMAccelSetASN extends ASN1Object {
+
+    private ASN1Integer lng;
+    private ASN1Integer lat;
+    private ASN1Integer vet;
+    private ASN1Integer yaw;
+
+    public BSMAccelSetASN(BSMAccelSet bsmAccelSet) {
+        this.lng = new ASN1Integer(bsmAccelSet.getLong_());
+        this.lat = new ASN1Integer(bsmAccelSet.getLat());
+        this.vet = new ASN1Integer(bsmAccelSet.getVert());
+        this.yaw = new ASN1Integer(bsmAccelSet.getYaw());
     }
 
-    private int unusedBits=3;
-
-    @JsonProperty(value = "bytes")
-    public byte[] getBytes() {
-        return bytes;
-    }
-
-    private byte[] bytes={64};
-
-    public BSMWheelBrakes(int unusedBits, byte[] bytes) {
-        this.unusedBits = unusedBits;
-        this.bytes = bytes;
+    @Override
+    public ASN1Primitive toASN1Primitive() {
+        ASN1EncodableVector vector = new ASN1EncodableVector();
+        vector.add(lng);
+        vector.add(lat);
+        vector.add(vet);
+        vector.add(yaw);
+        return new DERSequence(vector);
     }
 }

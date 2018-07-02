@@ -20,18 +20,29 @@ package com.volvocars.v2x.cmcdemo.v2x.msg;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.e2x.utils.JsonUtils;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @JsonView
 public class AuthResp {
+    public AuthResp(int result, String token, String key, String tokenvalidtime, String keyvalidtime, String reportTime) {
+        this.result = result;
+        this.token = token;
+        this.key = key;
+        this.tokenvalidtime = tokenvalidtime;
+        this.keyvalidtime = keyvalidtime;
+        this.reportTime = reportTime;
+    }
+
+    public AuthResp() {
+        super();
+    }
+
     @JsonProperty("result")
     public int getResult() {
         return result;
     }
-    @JsonProperty("result")
     public void setResult(int result) {
         this.result = result;
     }
@@ -40,7 +51,7 @@ public class AuthResp {
     public String getToken() {
         return token;
     }
-    @JsonProperty("token")
+
     public void setToken(String token) {
         this.token = token;
     }
@@ -48,7 +59,7 @@ public class AuthResp {
     public String getKey() {
         return key;
     }
-    @JsonProperty("key")
+
     public void setKey(String key) {
         this.key = key;
     }
@@ -56,7 +67,6 @@ public class AuthResp {
     public String getTokenvalidtime() {
         return tokenvalidtime;
     }
-    @JsonProperty("tokenvalidtime")
     public void setTokenvalidtime(String tokenvalidtime) {
         this.tokenvalidtime = tokenvalidtime;
     }
@@ -69,7 +79,6 @@ public class AuthResp {
     public String getKeyvalidtime() {
         return keyvalidtime;
     }
-    @JsonProperty("keyvalidtime")
     public void setKeyvalidtime(String keyvalidtime) {
         this.keyvalidtime = keyvalidtime;
     }
@@ -78,14 +87,10 @@ public class AuthResp {
     @JsonProperty("timestamp")
     private String reportTime;
 
-    public AuthResp(int result,String timestamp){
-        this.result = result;
-        this.reportTime = timestamp;
+    @Override
+    public String toString(){
+        String rs = JsonUtils.object2Json(this);
+        return rs;
     }
-    public AuthResp(int result, String token, String key, String tokenvalidtime) {
-        this.result = result;
-        this.token = token;
-        this.key = key;
-        this.tokenvalidtime = tokenvalidtime;
-    }
+
 }

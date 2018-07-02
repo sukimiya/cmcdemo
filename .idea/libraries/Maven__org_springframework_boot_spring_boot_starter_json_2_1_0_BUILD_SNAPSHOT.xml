@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: org.springframework.boot:spring-boot-starter-json:2.1.0.BUILD-SNAPSHOT">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-json/2.1.0.BUILD-SNAPSHOT/spring-boot-starter-json-2.1.0.BUILD-20180625.112838-198.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-json/2.1.0.BUILD-SNAPSHOT/spring-boot-starter-json-2.1.0.BUILD-20180628.205030-204.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-json/2.1.0.BUILD-SNAPSHOT/spring-boot-starter-json-2.1.0.BUILD-20180625.112838-198-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-json/2.1.0.BUILD-SNAPSHOT/spring-boot-starter-json-2.1.0.BUILD-20180628.205030-204-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-json/2.1.0.BUILD-SNAPSHOT/spring-boot-starter-json-2.1.0.BUILD-20180625.112838-198-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-starter-json/2.1.0.BUILD-SNAPSHOT/spring-boot-starter-json-2.1.0.BUILD-20180628.205030-204-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

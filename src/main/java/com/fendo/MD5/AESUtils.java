@@ -18,6 +18,7 @@
 
 package com.fendo.MD5;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
@@ -34,6 +35,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import io.e2x.logger.Logger;
 import org.apache.commons.lang3.StringUtils;
 
 
@@ -120,21 +122,19 @@ public class AESUtils {
      * 6.返回字符串
      */
     public static Algorithm algorithm = Algorithm.AES_ECB_P;
-    public static String AESEncode(String content) {
+    public static String AESEncode(String content,String decryptKey) {
         try {
             //1.构造密钥生成器，指定为AES算法,不区分大小写
             KeyGenerator keygen = KeyGenerator.getInstance(KeyAlgorithm.AES.getAlgorithm());
             //2.根据ecnodeRules规则初始化密钥生成器
             //生成一个128位的随机源,根据传入的字节数组
-            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
-            random.setSeed(encodeRules.getBytes());
-            keygen.init(RandomBit.B128.getBit(), random);
+            keygen.init(RandomBit.B128.getBit(),  new SecureRandom(decryptKey.getBytes()));
             //3.产生原始对称密钥
             SecretKey original_key = keygen.generateKey();
             //4.获得原始对称密钥的字节数组
             byte[] raw = original_key.getEncoded();
             //5.根据字节数组生成AES密钥
-            SecretKey key = new SecretKeySpec(raw, algorithm.getAlgorithm());
+            SecretKey key = new SecretKeySpec(raw, KeyAlgorithm.AES.getAlgorithm());
             //6.根据指定算法AES自成密码器
             Cipher cipher = Cipher.getInstance(algorithm.getAlgorithm());
             //7.初始化密码器，第一个参数为加密(Encrypt_mode)或者解密解密(Decrypt_mode)操作，第二个参数为使用的KEY
@@ -177,15 +177,17 @@ public class AESUtils {
      * @throws Exception
      */
     public static byte[] aesEncryptToBytes(String content, String encryptKey) throws Exception {
+        return aesEncrypt(content.getBytes(),encryptKey);
+    }
+    public static byte[] aesEncrypt(byte [] content,String encryptKey) throws Exception{
         KeyGenerator kgen = KeyGenerator.getInstance(KeyAlgorithm.AES.getAlgorithm());
         kgen.init(RandomBit.B128.getBit(), new SecureRandom(encryptKey.getBytes()));
 
         Cipher cipher = Cipher.getInstance(algorithm.getAlgorithm());
-        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(kgen.generateKey().getEncoded(), "AES"));
+        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(kgen.generateKey().getEncoded(), KeyAlgorithm.AES.getAlgorithm()));
 
-        return cipher.doFinal(content.getBytes(charset));
+        return cipher.doFinal(content);
     }
-
     /**
      * 解密
      * 解密过程：
@@ -193,21 +195,19 @@ public class AESUtils {
      * 2.将加密后的字符串反纺成byte[]数组
      * 3.将加密内容解密
      */
-    public static String AESDecode(String content) {
+    public static String AESDecode(String content, String decryptKey) {
         try {
             //1.构造密钥生成器，指定为AES算法,不区分大小写
             KeyGenerator keygen = KeyGenerator.getInstance(KeyAlgorithm.AES.getAlgorithm());
             //2.根据ecnodeRules规则初始化密钥生成器
             //生成一个128位的随机源,根据传入的字节数组
-            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
-            random.setSeed(encodeRules.getBytes());
-            keygen.init(RandomBit.B128.getBit(), random);
+            keygen.init(RandomBit.B128.getBit(), new SecureRandom(decryptKey.getBytes()));
             //3.产生原始对称密钥
             SecretKey original_key = keygen.generateKey();
             //4.获得原始对称密钥的字节数组
             byte[] raw = original_key.getEncoded();
             //5.根据字节数组生成AES密钥
-            SecretKey key = new SecretKeySpec(raw, algorithm.getAlgorithm());
+            SecretKey key = new SecretKeySpec(raw, KeyAlgorithm.AES.getAlgorithm());
             //6.根据指定算法AES自成密码器
             Cipher cipher = Cipher.getInstance(algorithm.getAlgorithm());
             //7.初始化密码器，第一个参数为加密(Encrypt_mode)或者解密(Decrypt_mode)操作，第二个参数为使用的KEY
@@ -246,13 +246,14 @@ public class AESUtils {
      * @throws Exception
      */
     public static String aesDecryptByBytes(byte[] encryptBytes, String decryptKey) throws Exception {
+        Logger logger = new Logger(AESUtils.class);
+        logger.info("AESUtils::aesDecryptByBytes ["+encryptBytes.toString()+"] with "+algorithm.getAlgorithm());
         KeyGenerator kgen = KeyGenerator.getInstance(KeyAlgorithm.AES.getAlgorithm());
         kgen.init(RandomBit.B128.getBit(), new SecureRandom(decryptKey.getBytes()));
 
         Cipher cipher = Cipher.getInstance(algorithm.getAlgorithm());
-        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(kgen.generateKey().getEncoded(), "AES"));
+        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(kgen.generateKey().getEncoded(), KeyAlgorithm.AES.getAlgorithm()));
         byte[] decryptBytes = cipher.doFinal(encryptBytes);
-
         return new String(decryptBytes);
     }
 
@@ -283,7 +284,7 @@ public class AESUtils {
      * @throws Exception
      */
     public static String aesDecrypt(String encryptStr, String decryptKey) throws Exception {
-        return StringUtils.isEmpty(encryptStr) ? null : aesDecryptByBytes(base64Decode(encryptStr), decryptKey);
+        return aesDecryptByBytes(base64Decode(encryptStr), decryptKey);
     }
 
     /**
