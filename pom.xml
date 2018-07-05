@@ -70,18 +70,13 @@
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
-			<version>4.1.25.Final</version>
+			<version>4.1.13.Final</version>
 		</dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.5</version>
         </dependency>
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-buffer</artifactId>
-			<version>4.1.24.Final</version>
-		</dependency>
         <dependency>
             <groupId>uk.gov.hmrc</groupId>
             <artifactId>logback-json-logger_2.11</artifactId>

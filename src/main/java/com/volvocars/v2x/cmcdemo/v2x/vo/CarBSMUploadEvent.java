@@ -27,7 +27,6 @@ import com.volvocars.v2x.cmcdemo.repo.CarAuthRepository;
 import com.volvocars.v2x.cmcdemo.v2x.V2XClientUtils;
 import io.e2x.logger.Logger;
 import io.e2x.utils.JsonUtils;
-import org.asnlab.asndt.runtime.conv.AsnConverter;
 import org.bouncycastle.asn1.BEROctetString;
 import org.bouncycastle.util.encoders.Hex;
 import reactor.core.publisher.Mono;
@@ -67,10 +66,9 @@ public class CarBSMUploadEvent {
         byte[] ivk = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         try {
             String json = JsonUtils.object2Json(bsmUploadEventPackage);
-//            BSMASNVO bsmasnvo = new BSMASNVO(0,bsmFrame);
-//            byte[] asn1 = bsmasnvo.toASN1Primitive().getEncoded();
+            BSMASNVO bsmasnvo = new BSMASNVO(0,bsmFrame);
+            byte[] asn1 = bsmasnvo.toASN1Primitive().getEncoded();
             logger.info("CarBSMUploadEvent.serialize with key: "+key);
-            AsnConverter asn1 =
             outputstream = Aes.encBytes(asn1,key.getBytes(),ivk);
             logger.info("out put steam:"+Hex.toHexString(outputstream).toUpperCase());
         } catch (JsonProcessingException e) {

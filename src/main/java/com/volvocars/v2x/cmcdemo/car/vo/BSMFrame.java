@@ -242,16 +242,8 @@ public class BSMFrame {
 
     private byte[] tremByte(byte[] ori,int maxLengh){
         byte[] rs = new byte[maxLengh];
-        int max = ori.length;
-        int n = maxLengh-1;
-        for(int i=max-maxLengh;i<max;i++){
-            if(i<0){
-                rs[n] = 0;
-            }else{
-                rs[n] = ori[i];
-            }
-            n--;
-
+        for(int i=0;i<maxLengh;i++){
+            rs[i] = ori[i];
         }
         return rs;
     }

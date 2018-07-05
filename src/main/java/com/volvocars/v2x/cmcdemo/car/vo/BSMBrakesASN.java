@@ -23,12 +23,14 @@ import org.bouncycastle.asn1.*;
 import java.io.IOException;
 
 public class BSMBrakesASN extends ASN1Object {
-    private DEROctetString brakePadel;
+    private ASN1OctetString brakePadel;
     private ASN1Object wheelBrakes;
+    private ASN1OctetString traction;
 
     public BSMBrakesASN(BSMBrakes bsmBrakes) {
         brakePadel = new DEROctetString(bsmBrakes.brakePadel.getBytes());
         wheelBrakes =new BSMWheelBrakesASN(bsmBrakes.wheelBrakes);
+        traction = new DEROctetString(bsmBrakes.traction.getBytes());
     }
 
     @Override
@@ -36,6 +38,7 @@ public class BSMBrakesASN extends ASN1Object {
         ASN1EncodableVector vector = new ASN1EncodableVector();
         vector.add(brakePadel);
         vector.add(wheelBrakes);
+        vector.add(traction);
         return new DERSequence(vector);
     }
 }

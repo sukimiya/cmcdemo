@@ -25,12 +25,12 @@ import java.io.IOException;
 public class BSMFrameASN extends ASN1Object {
 
     private ASN1Integer msgCnt;
-    private DEROctetString id;
-    private DEROctetString plateNo;
+    private ASN1OctetString id;
+    private ASN1OctetString plateNo;
     private ASN1Integer secMark;
     private ASN1Object pos;
     private ASN1Object accuracy;
-    private DEROctetString transmission;
+    private ASN1OctetString transmission;
     private ASN1Integer speed;
     private ASN1Integer heading;
     private ASN1Integer angle;
@@ -39,11 +39,11 @@ public class BSMFrameASN extends ASN1Object {
     private ASN1Object brakes;
     private ASN1Object size;
     private ASN1Object vehicleClass;
-    private DEROctetString token;
+    private ASN1OctetString token;
 
     public BSMFrameASN(BSMFrame bsmFrame) throws IOException {
         this.msgCnt = new ASN1Integer(bsmFrame.getMsgCnt());
-        this.id =new DEROctetString(bsmFrame.getToken());
+        this.id = new DEROctetString(bsmFrame.getId());
         this.plateNo =new DEROctetString(bsmFrame.getPlateNo());
         this.secMark = new ASN1Integer(bsmFrame.getSecMark());
         this.pos = new BSMPosASN(bsmFrame.getPos());

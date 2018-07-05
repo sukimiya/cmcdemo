@@ -21,10 +21,10 @@ package com.volvocars.v2x.cmcdemo.car.vo;
 import org.bouncycastle.asn1.*;
 
 public class BSMVehicleClassASN extends ASN1Object {
-    private DEROctetString classification;
+    private ASN1Integer classification;
 
     public BSMVehicleClassASN(BSMVehicleClass vehicleClass) {
-        this.classification = new DEROctetString(vehicleClass.classification.getBytes());
+        this.classification = new ASN1Integer(vehicleClass.classification);
     }
 
     @Override

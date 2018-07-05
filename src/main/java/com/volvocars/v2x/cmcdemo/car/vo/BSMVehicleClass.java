@@ -19,9 +19,9 @@
 package com.volvocars.v2x.cmcdemo.car.vo;
 
 public class BSMVehicleClass {
-    public String classification;
+    public int classification;
 
     public BSMVehicleClass(int cls) {
-        classification = Integer.toString(cls);
+        classification = cls;
     }
 }
